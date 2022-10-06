@@ -3,7 +3,17 @@ import { put, takeEvery } from 'redux-saga/effects';
 
 
 function* getItems(){
-
+    try{ const dbItems = yield axios({
+        method: 'GET',
+        url: '/api/shelf'
+    })
+    yield put({
+        type: 'SET_ITEMS',
+        payload: dbItems.data
+    })
+    }catch (error) {
+        console.log('Error getting items:', error);
+    }
 }
 
 
