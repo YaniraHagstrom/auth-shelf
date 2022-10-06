@@ -9,8 +9,11 @@ export default function ShelfItem({item}){
     const user = useSelector(state=> state.user);
     // const userId = user.id
     const deleteItem = ()=> {
+        console.log('delete button clicked')
         dispatch({
-            type: 'SAGA_DELETE_ITEM' })
+            type: 'SAGA_DELETE_ITEM',
+            payload: item.id
+        })
     }
 
     return(
@@ -18,11 +21,12 @@ export default function ShelfItem({item}){
             <img src={item.image_url} />
             <p>{item.description}</p>
             { user.id === item.user_id ? 
-                <IconButton aria-label="delete" color="primary">
+                <IconButton aria-label="delete"             color="primary"
+                onClick={deleteItem}
+                >
                     <DeleteIcon />
                 </IconButton> :
                 <IconButton 
-                    onClick={deleteItem}
                     aria-label="delete" disabled  color="primary">
                     <DeleteIcon />
                 </IconButton>
