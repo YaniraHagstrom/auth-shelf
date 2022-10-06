@@ -7,14 +7,26 @@ function ItemForm() {
 
     const dispatch = useDispatch();
 
-    const [newItem, setNewItem] = useState('');
     const [newItemDescription, setNewItemDescription] = useState('');
     const [newItemImage, setNewItemImage] = useState('');
     
 
-    const handleAddItem = () => {
+    const handleAddItem = (e) => {
         console.log('in handleAddItem');
-    }
+        e.preventDefault();
+        const action = {
+                type: 'SAGA_ADD_ITEMS',
+                payload: {description: newItemDescription, image_url: newItemImage}
+            }
+            dispatch(action);
+            // clear inputs
+            setNewItemDescription('');
+            setNewItemImage('');
+        }
+        
+        
+        // console.log('newItem is:', newItem);
+
 
     return (
         <div>
