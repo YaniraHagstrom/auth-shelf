@@ -24,6 +24,23 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
   // endpoint functionality
+  const id = req.user.id
+  console.log('userid is:', id);
+  console.log('in router.post. Here is req.body:', req.body);
+  const newItem = req.body;
+  const queryText = `INSERT INTO item ("description", "image_url", "user_id")
+	                   VALUES ($1, $2, $3);`;
+  const queryValues = [
+    newItem.description,
+    newItem.image_url,
+    id
+  ]
+  pool.query(queryText, queryValues)
+    .then(() => {res.sendStatus(201); })
+    .catch((err) => {
+      console.log('error in post route:', err);
+      res.sendStatus(500);
+    })
 });
 
 /**
