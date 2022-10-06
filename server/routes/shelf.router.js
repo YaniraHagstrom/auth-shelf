@@ -21,7 +21,25 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
   // endpoint functionality
-});
+  console.log(`Deleting Item with ID ${req.params.id}`);
+    
+    const sqlText = `
+        DELETE from "item"
+        WHERE "id"=$1;
+        `
+    let sqlVal = [req.params.id];
+    
+    pool.query(sqlText, sqlVal)
+
+    .then( delRes => {
+        console.log('DELETE Route Successful', delRes);
+        res.sendStatus(200);
+    })
+    .catch( delErr => {
+        console.log('DELETE Route Unsuccessful', delErr);
+        res.sendStatus(500);
+    });
+}); // END OF router.delete
 
 /**
  * Update an item if it's something the logged in user added
